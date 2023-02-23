@@ -6,8 +6,6 @@ from datasets import load_dataset
 import lightning as L
 from lightning.pytorch.callbacks import ModelCheckpoint
 from lightning.pytorch.loggers import CSVLogger
-import matplotlib.pyplot as plt
-import pandas as pd
 import torch
 from torch.utils.data import DataLoader
 import torchmetrics
@@ -25,28 +23,6 @@ from local_dataset_utilities import IMDBDataset
 
 def tokenize_text(batch):
     return tokenizer(batch["text"], truncation=True, padding=True)
-
-
-def plot_logs(log_dir):
-    metrics = pd.read_csv(op.join(log_dir, "metrics.csv"))
-
-    aggreg_metrics = []
-    agg_col = "epoch"
-    for i, dfg in metrics.groupby(agg_col):
-        agg = dict(dfg.mean())
-        agg[agg_col] = i
-        aggreg_metrics.append(agg)
-
-    df_metrics = pd.DataFrame(aggreg_metrics)
-    df_metrics[["train_loss", "val_loss"]].plot(
-        grid=True, legend=True, xlabel="Epoch", ylabel="Loss"
-    )
-    plt.savefig(op.join(log_dir, "loss.pdf"))
-
-    df_metrics[["train_acc", "val_acc"]].plot(
-        grid=True, legend=True, xlabel="Epoch", ylabel="Accuracy"
-    )
-    plt.savefig(op.join(log_dir, "acc.pdf"))
 
 
 class LightningModel(L.LightningModule):
@@ -208,9 +184,3 @@ if __name__ == "__main__":
     with open(op.join(trainer.logger.log_dir, "outputs.txt"), "w") as f:
         f.write((f"Time elapsed {elapsed/60:.2f} min\n"))
         f.write(f"Test acc: {test_acc}")
-
-    #########################################
-    ### 6 Plot logs
-    #########################################
-
-    plot_logs(trainer.logger.log_dir)
