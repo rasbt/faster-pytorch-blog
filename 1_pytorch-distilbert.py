@@ -124,21 +124,21 @@ if __name__ == "__main__":
         dataset=train_dataset,
         batch_size=12,
         shuffle=True,
-        num_workers=4,
+        num_workers=1,
         drop_last=True,
     )
 
     val_loader = DataLoader(
         dataset=val_dataset,
         batch_size=12,
-        num_workers=2,
+        num_workers=1,
         drop_last=True,
     )
 
     test_loader = DataLoader(
         dataset=test_dataset,
         batch_size=12,
-        num_workers=2,
+        num_workers=1,
         drop_last=True,
     )
 

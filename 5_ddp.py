@@ -175,7 +175,9 @@ if __name__ == "__main__":
         max_epochs=3,
         callbacks=callbacks,
         accelerator="gpu",
-        devices=1,
+        devices=4,
+        strategy="ddp",  # <-- NEW
+        precision="16",
         logger=logger,
         log_every_n_steps=10,
         deterministic=True,

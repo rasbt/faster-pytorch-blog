@@ -176,6 +176,7 @@ if __name__ == "__main__":
         callbacks=callbacks,
         accelerator="gpu",
         devices=1,
+        precision="16",  # <-- NEW
         logger=logger,
         log_every_n_steps=10,
         deterministic=True,
