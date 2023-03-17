@@ -112,6 +112,10 @@ class LightningModel(L.LightningModule):
 if __name__ == "__main__":
     print(watermark(packages="torch,lightning,transformers", python=True), flush=True)
     print("Torch CUDA available?", torch.cuda.is_available(), flush=True)
+    
+    # Enable Tensor Cores
+    if torch.cuda.get_device_capability() >= (8, 0):
+        torch.set_float32_matmul_precision('high')
 
     torch.manual_seed(123)
 
@@ -169,7 +173,8 @@ if __name__ == "__main__":
     model = AutoModelForSequenceClassification.from_pretrained(
         "distilbert-base-uncased", num_labels=2
     )
-
+    
+    # First model inference will trigger compilation
     model = torch.compile(model)
     lightning_model = LightningModel(model)
     #lightning_model = torch.compile(lightning_model)
