@@ -188,7 +188,7 @@ if __name__ == "__main__":
         callbacks=callbacks,
         accelerator="gpu",
         precision="16",
-        devices=[1],
+        devices=1,
         logger=logger,
         log_every_n_steps=10,
         deterministic=True,

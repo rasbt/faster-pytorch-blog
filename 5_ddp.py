@@ -177,7 +177,7 @@ if __name__ == "__main__":
         accelerator="gpu",
         devices=4,
         strategy="ddp",  # <-- NEW
-        precision="16",
+        precision="16-mixed",
         logger=logger,
         log_every_n_steps=10,
         deterministic=True,
