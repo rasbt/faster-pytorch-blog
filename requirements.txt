@@ -1,0 +1,6 @@
+datasets==2.11
+lightning==2.0
+matplotlib==3.7
+torch==2.0
+transformers==4.27
+watermark==2.3
